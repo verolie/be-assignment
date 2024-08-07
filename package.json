@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "prisma:generate": "prisma generate",
+    "prisma:migrate:deploy": "prisma migrate deploy"
+  },
+  "devDependencies": {
+    "prisma": "^5.18.0"
+  }
+}

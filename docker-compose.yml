@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: "concrete"
+    build:
+      context: .
+      dockerfile: Dockerfile  
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
+
+
+  postgres:
+    container_name: "payment_db"
+    image: postgres:14
+    ports:
+      - "5050:5432"
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=S3cret
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=payment_db
+    restart: always

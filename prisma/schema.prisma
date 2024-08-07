@@ -1,0 +1,46 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "go run github.com/steebchen/prisma-client-go"
+}
+
+model User {
+  acct_num      String @id @unique @db.VarChar(15)
+  name          String @db.VarChar(20)
+  email         String @db.VarChar(30) @unique
+  password      String @db.VarChar(200)
+  address       String @db.VarChar(100)
+  acctDetail    AccountDetail[]
+}
+
+model AccountDetail {
+  loc_acct       String   @id @unique @db.VarChar(15)
+  prin_pan       String   @db.VarChar(50) @unique
+  acct_typ       String   @db.VarChar(2)
+  actv_typ       String   @db.VarChar(1)
+  blnc_amt       Float  
+  loan_amt       Float  
+  cycc_day       Int
+  min_loan_pymnt Float  
+  acct_num       String   @db.VarChar(15)
+  acct           User     @relation(fields: [acct_num], references: [acct_num])
+  trxDetail      TransactionDetail[]
+}
+
+model TransactionDetail {
+  trx_id         String    @id @unique @db.VarChar(15)
+  timestamps     DateTime  
+  receiver_pan   String    @db.VarChar(50)
+  sender_pan     String    @db.VarChar(50)
+  apv_code       String    @db.VarChar(10)
+  trx_typ        String    @db.VarChar(2)
+  amt            Float   
+  status         String    @db.VarChar(1)
+  desc           String    @db.VarChar(100)
+  loc_acct       String    @db.VarChar(15)
+  acctDetail     AccountDetail    @relation(fields: [loc_acct], references: [loc_acct])
+}
