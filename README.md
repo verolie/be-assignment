@@ -1,3 +1,61 @@
+# Documentation for the program
+## Description:
+In this project to develop a payment gateway that use Golang programming language. For the framework, I am using Gin. For the database, I am using PostgreSQL and Prisma as database frameworks. For the authentication using JWT. 
+
+## Deployment 
+- If you never use golang then you have to download golang first
+- When you are in terminal can use go command then go to your project folder
+- do this command to download library:
+```
+go mod init
+go mod tidy
+```
+- Download Prisma in your terminal
+```
+npm install -g prisma
+```
+
+then tried to execute the comment below to create a database and application
+```
+//to generate database to the app
+npx prisma generate
+//build docker container
+docker-compose up --build 
+```
+then do migrate database using the comment
+```
+npx prisma migrate dev
+```
+
+## API Route, Description
+### User
+- /user/login: login user and get token
+- /user/register: register user
+- /user/account/detail/:acct_num: check account detail
+- /user/payment/history/:loc_acct: check transaction history by the account
+
+### Transaction
+-/transaction/send: using jwt token by adding to Authorization and add token without 'bearer '.
+- /transaction/withdraw: using jwt token same use like end endpoint. 
+- /transaction/detail: get detail for all transaction.
+- /transaction/detail/:trx_id: get detail transaction by id.
+
+## Transaction and Card Type
+### Transaction Type
+So there are 2 transaction type:
+- C = Credit -> If the transaction is C, the balance will be reduced. 
+- D = Debit -> If the transaction is D, the balance amount will increase.
+
+### Card Type
+There are 3 type for card type:
+- C : credit card
+- D : debit card
+- PL: pay loan has a similarity to a credit card.
+
+### status
+- W : write Off (if write off will return cannot do transaction)
+- G : good (can do transaction)
+
 # Take home assignment
 
 
